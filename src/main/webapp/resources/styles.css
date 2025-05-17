@@ -1,0 +1,49 @@
+/* Custom styles to complement Tailwind CSS */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+.sidebar a {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.event-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button, a.bg-blue-500, a.bg-green-500 {
+    transition: background-color 0.3s ease;
+}
+
+/* Animations */
+.animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
