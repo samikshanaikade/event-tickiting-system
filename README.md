@@ -2,6 +2,10 @@ Event Ticketing System Workflow and Implementation Guide
 Project Overview
 The Event Ticketing System is a Java-based web application built with Spring Boot, using PostgreSQL as the database, IntelliJ IDEA as the IDE, and REST APIs for communication. It supports user registration, event browsing, ticket booking, payment processing, email notifications, and an admin panel. The system leverages multi-threading for concurrent tasks, ensures thread safety for concurrency, and adopts a microservices architecture for scalability.
 
+Overview
+
+The Event Ticketing System is a Spring Boot web application designed to allow users to browse, book, and manage events such as concerts, dramas, art galleries, and more. It provides user authentication, event categorization, booking management, and a checkout process. The application uses a PostgreSQL database (with an alternative H2 in-memory database configuration), Spring Security for authentication, and JSP for rendering views. 
+
 Tools Required (License-Free)
 IDE: IntelliJ IDEA Community Edition (Free, supports Spring Boot, Java, and PostgreSQL integration).
 Backend Framework: Spring Boot (Free, Apache 2.0 license, includes Spring MVC, Spring Data JPA, Spring Security).
