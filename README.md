@@ -48,59 +48,175 @@ This project follows a layered architecture based on **MVC (Model-View-Controlle
 
 ## 🧰 Tech Stack
 
-| Layer              | Technology              |
-|--------------------|--------------------------|
-| Backend            | Java 17+, Spring Boot    |
-| Web Layer          | Spring MVC, Thymeleaf    |
-| Security           | Spring Security          |
-| Database           | H2 (in-memory) / MySQL   |
-| ORM                | Hibernate (via JPA)      |
-| Build Tool         | Maven                    |
-| Configuration      | `application.properties` |
+
+## 🔧 Tech Stack
+
+- **Backend**: Spring Boot 3.2+, Spring Security
+- **Frontend**: JSP (with `header.jsp`, `footer.jsp` layout includes)
+- **Database**: PostgreSQL (with optional H2 for testing)
+- **PDF Generation**: iText PDF
+- **IDE**: IntelliJ IDEA
+- **Build Tool**: Maven
 
 ---
 
 ## 📁 Project Structure Overview
 
 event-ticketing-system/
-│
+EventTicketingSystem/
 ├── src/
-│ └── main/
-│ ├── java/com/eventticketing/
-│ │ ├── config/ # Security and application configurations
-│ │ ├── controller/ # Handles HTTP requests
-│ │ ├── entity/ # JPA entities (Event, Booking, User)
-│ │ ├── repository/ # DAO layer using Spring Data JPA
-│ │ ├── service/ # Business logic layer
-│ │ └── EventTicketingSystemApplication.java
-│ └── resources/
-│ ├── templates/ # HTML templates (Thymeleaf)
-│ ├── static/ # CSS, JS, images (if any)
-│ └── application.properties
-│
-├── pom.xml # Maven project configuration
-└── README.md
+│ ├── main/
+│ │ ├── java/com/eventticketing/
+│ │ │ ├── config/
+│ │ │ ├── controller/
+│ │ │ ├── model/
+│ │ │ ├── repository/
+│ │ │ ├── service/
+│ │ │ └── EventTicketingApplication.java
+│ │ ├── resources/application.properties
+│ │ └── webapp/
+│ │ ├── css/, js/, images/
+│ │ └── WEB-INF/views/*.jsp
+├── pom.xml
 
 
 ---
 
-## 🛠️ Setup & Run
+## ⚙️ Features
 
-### 1. Prerequisites
+- 👤 User registration and login
+- 🗂️ Event browsing and categorization
+- 📝 Ticket booking and checkout
+- 🧾 PDF ticket generation
+- 🛡️ Secure authentication with BCrypt
+- 📬 Email notifications (extendable)
+- 🧠 Multi-threaded and thread-safe
+- 📊 Admin panel (future scope)
 
-- Java 17 or higher
-- Maven 3.x
-- IDE (IntelliJ IDEA, Eclipse, VSCode)
+---
 
-### 2. Clone the Repository
+## 🛠 Setup Instructions
 
-```bash
-git clone https://github.com/yourusername/event-ticketing-system.git
-cd event-ticketing-system
-👥 User Roles
-Role	Description
-USER	Can register, login, view & book events
-ADMIN	Can manage events and users
+### 📌 Prerequisites
+
+- Java 17+
+- Maven
+- PostgreSQL with a database named `ticketingdb`
+  - **Username**: `postgres`
+  - **Password**: `password`
+
+### 🧪 Steps
+
+1. **Clone the repository** or extract the project zip:
+   ```bash
+   git clone https://github.com/samikshanaikade/event-tickiting-system.git
+
+---
+
+Configure PostgreSQL:
+Run these SQL commands:
+
+CREATE DATABASE ticketingdb;
+
+CREATE TABLE "user" (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255) UNIQUE,
+  password VARCHAR(255)
+);
+
+CREATE TABLE event (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  description TEXT,
+  date TIMESTAMP,
+  location VARCHAR(255),
+  category VARCHAR(50),
+  price DECIMAL(10,2),
+  image_url VARCHAR(255)
+);
+
+CREATE TABLE booking (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES "user"(id),
+  event_id INT REFERENCES event(id),
+  quantity INT,
+  total_price DECIMAL(10,2),
+  booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+--
+
+Build and run:
+mvn clean install
+mvn spring-boot:run
+
+--
+
+Access the app:
+Visit http://localhost:8081
+
+--
+
+🌐 Endpoints Overview
+URL	Description
+/	Home page
+/register	User registration
+/login	Login
+/book-events	Browse and book events
+/my-bookings	View user’s bookings
+/checkout	Final booking confirmation
+/download-ticket	Download PDF ticket (if added)
+
+📄 Key JSP Views
+home-content.jsp: Event showcase
+
+register-content.jsp: Signup form
+
+login-content.jsp: Login form
+
+book-events-content.jsp: Event list
+
+booking-form-content.jsp: Booking form
+
+checkout-content.jsp: Booking summary
+
+my-bookings-content.jsp: Booking history
+
+layout.jsp: Combines header.jsp + footer.jsp
+
+error-content.jsp: Custom error display
+
+📦 Notable Dependencies
+spring-boot-starter-web
+
+spring-boot-starter-security
+
+spring-boot-starter-data-jpa
+
+postgresql
+
+itextpdf
+
+JSP support for embedded Tomcat
+
+🛡️ Security
+Login secured using Spring Security
+
+BCrypt password hashing
+
+URL-based access control in SecurityConfig.java
+
+📝 Notes
+Apache Tiles was removed for simplicity; JSP includes now manage layout.
+
+SLF4J conflict resolved with consistent versioning and Logback.
+
+PostgreSQL can be swapped with H2 for testing purposes.
+
+📬 License
+This project is built for academic and learning purposes. Contact the authors for reuse or extensions.
+
 
 
 
