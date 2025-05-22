@@ -1,0 +1,52 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <!-- Base layout definition -->
+    <definition name="baseLayout" template="/WEB-INF/views/layout.jsp">
+        <put-attribute name="title" value="Event Ticketing System"/>
+        <put-attribute name="content" value=""/>
+    </definition>
+
+    <!-- Home page -->
+    <definition name="home" extends="baseLayout">
+        <put-attribute name="title" value="Home - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/home-content.jsp"/>
+    </definition>
+
+    <!-- Login page -->
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Login - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/login.jsp"/>
+    </definition>
+
+    <!-- Signup page -->
+    <definition name="signup" extends="baseLayout">
+        <put-attribute name="title" value="Signup - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/signup.jsp"/>
+    </definition>
+
+    <!-- Events list page -->
+    <definition name="events" extends="baseLayout">
+        <put-attribute name="title" value="Events - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/events.jsp"/>
+    </definition>
+
+    <!-- Event details page -->
+    <definition name="eventDetails" extends="baseLayout">
+        <put-attribute name="title" value="Event Details - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/event-details.jsp"/>
+    </definition>
+
+    <!-- Booking confirmation page -->
+    <definition name="bookingConfirmation" extends="baseLayout">
+        <put-attribute name="title" value="Booking Confirmation - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/booking-confirmation.jsp"/>
+    </definition>
+
+    <!-- Error page -->
+    <definition name="error" extends="baseLayout">
+        <put-attribute name="title" value="Error - Event Ticketing System"/>
+        <put-attribute name="content" value="/WEB-INF/views/error.jsp"/>
+    </definition>
+</tiles-definitions>

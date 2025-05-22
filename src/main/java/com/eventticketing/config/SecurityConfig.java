@@ -1,7 +1,5 @@
 package com.eventticketing.config;
 
-import com.eventticketing.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,31 +11,39 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserService userService;
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register", "/login", "/test", "/simple", "/book-events", "/css/**", "/js/**", "/images/**").permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/register", "/login", "/book-events", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                        .requestMatchers("/book-event/**", "/checkout", "/my-bookings", "/download-ticket").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/book-events", true)
-                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .permitAll()
+                )
+                .csrf(csrf -> csrf.disable())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/error")
+                )
+                .sessionManagement(session -> session
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired")
                 );
-        return http.build();
-    }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return userService;
+        return http.build();
     }
 }
